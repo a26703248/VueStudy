@@ -1,3 +1,10 @@
+body {
+  background-image:url("../static/background2.jpg");
+  background-size: cover;
+  font-size:14px;
+  color: #f14ffc;
+}
+
 .font-color {
   color:red;
 }

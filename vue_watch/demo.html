@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Demo</title>
+  <link
+    rel="stylesheet"
+    href="./style.css"
+  >
+</head>
+
+<body>
+
+  <div id="contain">
+
+    <div>
+      <select v-model="city1">
+        <option
+          v-for="item in options1"
+          v-bind:value="item.value"
+        >{{item.text}}</option>
+      </select>
+
+      <select v-model="township1">
+        <option
+          v-for="item in child_township1[city1]"
+          v-bind:value="item.value"
+        >{{item.text}}</option>
+      </select>
+    </div>
+
+    <div>
+      <select v-model="city2" v-bind:disabled="toggle">
+        <option
+          v-for="item in options2"
+          v-bind:value="item.value"
+        >{{item.text}}</option>
+      </select>
+
+      <select v-model="township2" v-bind:disabled="toggle">
+        <option
+          v-for="item in child_township2[city2]"
+          v-bind:value="item.value"
+        >{{item.text}}</option>
+      </select>
+    </div>
+
+    <div>
+      <input
+        id="same-add"
+        type="checkbox"
+        v-model="toggle"
+      >
+      <label for="same-add">同地址{{toggle}}</label>
+    </div>
+
+  </div>
+
+  <script
+    src="./main.js"
+    type="module"
+  ></script>
+</body>
+
+</html>
