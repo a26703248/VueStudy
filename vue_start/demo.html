@@ -1,14 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html
+  xmlns:bind="https://staging-cn.vuejs.org/"
+  xmlns:on="https://staging-cn.vuejs.org/"
+>
 
 <head>
   <meta charset="utf-8">
   <title>Demo</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 
-<body>
+<body id="body">
+  <div id="contain">
+    <h1 v-bind:class="{'title':trigger}">{{title}}</h1>
+
+    <!-- 動態綁定class -->
+    <p v-bind:class="{'background':trigger}">{{description}}</p>
+    <p v-bind:class="{'font-color':trigger}">{{description}}</p>
+    <button v-on:click="trigger = !trigger">按我({{trigger}})</button>
+    <button v-on:click="number++">增加了 ({{addNumber}})</button>
+    <div v-if="">我是 v-if</div>
+    <div v-show="">我是 v-show</div>
+
+    <button v-on:click="buttonClickEvent1">按我 ({{buttonClickEvent1}})</button>
+  </div>
 
 
+  <script
+    src="./main.js"
+    type="module"
+  ></script>
 </body>
 
 </html>
