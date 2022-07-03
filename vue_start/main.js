@@ -10,6 +10,33 @@ const app = {
       firstName:"John",
       lastName:"Doe",
       buttonClickEvent1:true,
+      bookList:{
+        "Java":"500 TWD",
+        "Python":"30 US",
+        "Javascript":"20 EUR",
+        "R":"780 TWD",
+      },
+      carList:[
+        {"name":"保時捷", "price": "500K"},
+        {"name":"法拉利", "price": "3000K"},
+        {"name":"捷報", "price": "450K"},
+        {"name":"瑪莎拉蒂", "price": "300K"},
+      ],
+      bindForm:{
+        bindInput:"Input",
+        bindArea:"TextArea",
+        bindCheckbox:false,
+        bindMultiCheckbox:[],
+        bindPicked:"One",
+        bindSelect:null,
+        bindMultiSelect:[],
+        bindLazy:"lazy",
+        bindNumber:0,
+        bindTrim:"trim",
+        bindNotTrim:"not trim",
+      },
+      onNumber1:0,
+      onNumber2:0,
     };
   },
   computed:{
@@ -27,6 +54,9 @@ const app = {
     }
   },
   methods:{
+    addNumber2(){
+      this.onNumber2++;
+    }
   }
 };
 

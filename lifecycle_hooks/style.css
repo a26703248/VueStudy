@@ -1,0 +1,38 @@
+.img-size {
+  width:800px;
+  height:1200px;
+}
+.title {
+  color:white;
+}
+
+body {
+  background-image:url("./background2.jpg");
+}
+
+table {
+  text-align:left;
+}
+
+table > thead {
+  background-color: #9ce7f5;
+}
+
+table > tbody {
+  background-color: #c3f7c7;
+}
+
+table > thead > tr > td{
+  border:1px black solid;
+  font-size:24px;
+  text-align:center;
+}
+
+table > thead > tr > td:last-child {
+  width:300px
+}
+
+table > tbody > tr > td {
+  border:1px black solid;
+  font-size:16px;
+}

@@ -7,22 +7,289 @@
 <head>
   <meta charset="utf-8">
   <title>Demo</title>
-  <link rel="stylesheet" href="./style.css">
+  <link
+    rel="stylesheet"
+    href="./style.css"
+  >
 </head>
 
 <body id="body">
   <div id="contain">
-    <h1 v-bind:class="{'title':trigger}">{{title}}</h1>
 
-    <!-- 動態綁定class -->
-    <p v-bind:class="{'background':trigger}">{{description}}</p>
-    <p v-bind:class="{'font-color':trigger}">{{description}}</p>
-    <button v-on:click="trigger = !trigger">按我({{trigger}})</button>
-    <button v-on:click="number++">增加了 ({{addNumber}})</button>
-    <div v-if="">我是 v-if</div>
-    <div v-show="">我是 v-show</div>
+    <!-- 動態綁定 attribute -->
+    <div>
+      <h1 v-bind:class="{'title':trigger}">{{title}}</h1>
+      <h2>動態綁定class</h2>
+      <p v-bind:class="{'background':trigger}">{{description}}</p>
+      <p v-bind:class="{'font-color':trigger}">{{description}}</p>
+      <button v-on:click="trigger = !trigger">按我改變樣式({{trigger}})</button>
+    </div>
+    <hr />
 
-    <button v-on:click="buttonClickEvent1">按我 ({{buttonClickEvent1}})</button>
+    <!-- 計算屬性 -->
+    <div>
+      <h2>計算屬性</h2>
+      <div>計算屬性:{{addNumber}}</div>
+      <div>普通屬性:{{number}}</div>
+      <button v-on:click="number++">增加了</button>
+    </div>
+    <hr />
+
+    <!-- 條件渲染 -->
+    <div>
+      <h2>條件渲染</h2>
+      <div v-if="buttonClickEvent1">我是 v-if</div>
+      <div v-show="buttonClickEvent1">我是 v-show</div>
+
+      <button v-on:click="buttonClickEvent1 = !buttonClickEvent1">按我 ({{buttonClickEvent1}})</button>
+    </div>
+    <hr />
+
+    <!-- 列表渲染 -->
+    <div>
+      <h2>列表渲染</h2>
+      <h3>list:</h3>
+      <ul>
+        <li
+          v-for="item, index in carList"
+          v-bind:key="index"
+        >{{index}}. {{item.name}} 價格:{{item.price}}</li>
+      </ul>
+      <h3>table:</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>項次</th>
+            <th>書名</th>
+            <th>價格</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for=" value, key, index in bookList"
+            v-bind:key="index"
+          >
+            <td>{{index}}</td>
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+          </tr>
+        </tbody>
+      </table>
+      &emsp;
+      &emsp;
+      &emsp;
+    </div>
+    <hr />
+
+    <!-- 事件處理 -->
+    <div>
+      <p>
+        模板編譯器會通過檢查 v-on 的值是否是合法的 JavaScript 標示符或属性訪問来断定是何種形式的事件處理器。
+        舉个例子，foo、foo.bar 和 foo['bar'] 會被視為方法事件處理器，而 foo() 和 count++ 會被視為内聯事件處理器。
+      </p>
+      <h3>內聯事件</h3>
+      <button v-on:click="onNumber1++">內聯事件處理器 ({{onNumber1}})</button>
+      <h3>方法事件</h3>
+      <button v-on:click="addNumber2">方法事件處理器 ({{onNumber2}})</button>
+      <h3>事件修飾符</h3>
+      <pre>
+        .stop(停止傳遞訊息)
+        .prevent(阻止預設事件)
+        .self(只當事件觸發是由自己時)
+        .capture(內部元素被觸發時先執行此事件)
+        .once(只觸發一次)
+        .passive(不阻止默認事件)
+
+        例:
+        串接方式:
+        v-on:click.prevent.stop
+        單獨執行
+        v-on:click.once
+
+        請勿同时使用 .passive 和 .prevent，因為 .prevent 會被忽略並且你的瀏覽器可能會抛出警告。請記住，.passive 是向瀏覽器表明你不想阻止事件的默認行为。並且如果你這样做，可能在瀏覽器中收到一个警告。
+      </pre>
+
+      <h3>按鍵修飾符</h3>
+      <pre>
+        .enter
+        .tab
+        .delete (捕獲 “Delete” 和 “Backspace” 兩個按鍵)
+        .esc
+        .space
+        .up
+        .down
+        .left
+        .right
+
+        例:
+        Enter + Left
+        v-on:keyup.enter.left="onEnterLeft"
+
+        Right
+        v-on:keydown.right="onRight"
+
+      </pre>
+
+      <h3>系統按鍵修飾符</h3>
+      <pre>
+        .ctrl
+        .alt
+        .shift
+        .meta
+
+        例:
+        Shift + Alt
+        v-on:keyup.Shift.alt="onShiftAlt"
+
+        Right
+        v-on:click.ctrl="ClickCtrl"
+      </pre>
+
+      <h3>.exact 修飾符</h3>
+      <pre>
+        僅按下當前案件才觸發
+
+        例:
+        當按下 Ctrl 時，即使同時按下 Alt 或 Shift 也會觸發
+        v-on:keyup.ctrl="ClickCtrl"
+
+        僅當按下 Ctrl 且未按任何其他鍵時才会觸發
+        v-on:click.ctrl.exact="ClickCtrl"
+
+        僅當沒有按下任何系統按鍵時觸發
+        v-on:click.exact="ClickCtrl"
+      </pre>
+
+      <h3>滑鼠按鍵修飾符</h3>
+      <pre>
+        .left
+        .right
+        .middle
+
+      </pre>
+
+    </div>
+    <hr />
+
+    <!-- 表單輸入綁定 -->
+    <div>
+      <h2>表單雙向綁定(v-model)</h2>
+      <h3>文本</h3>
+      <div>{{bindForm.bindInput}}</div>
+      <input
+        v-model="bindForm.bindInput"
+        placeholder="EDIT ME"
+      >
+
+      <h3>多行文本</h3>
+      <div style="white-space:pre-line;">{{bindForm.bindArea}}</div>
+      <textarea
+        v-model="bindForm.bindArea"
+        placeholder="EDIT ME"
+        style="width:300px; height:200px"
+      ></textarea>
+
+      <h3>單選框</h3>
+      <div>{{bindForm.bindCheckbox}}</div>
+      <input
+        type="checkbox"
+        v-model="bindForm.bindCheckbox"
+      >
+
+      <h3>多選框</h3>
+      <div>{{bindForm.bindMultiCheckbox}}</div>
+      <input
+        type="checkbox"
+        value="Java"
+        v-model="bindForm.bindMultiCheckbox"
+      >
+      <label for="Java">Java</label>
+      <input
+        type="checkbox"
+        value="Python"
+        v-model="bindForm.bindMultiCheckbox"
+      >
+      <label for="Python">Python</label>
+      <input
+        type="checkbox"
+        value="C#"
+        v-model="bindForm.bindMultiCheckbox"
+      >
+      <label for="C#">C#</label>
+
+      <h3>單選按鈕</h3>
+      <div>{{bindForm.bindPicked}}</div>
+      <input
+        type="radio"
+        id="one"
+        value="One"
+        v-model="bindForm.bindPicked"
+      >
+      <label for="One">One</label>
+
+      <input
+        type="radio"
+        id="two"
+        value="Two"
+        v-model="bindForm.bindPicked"
+      >
+      <label for="Two">Two</label>
+
+      <h3>單選選擇器</h3>
+      <div>{{bindForm.bindSelect}}</div>
+      <select v-model="bindForm.bindSelect">
+        <option
+          disabled
+          value=""
+        >Please select one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+
+      <h3>多選選擇器</h3>
+      <div>{{bindForm.bindMultiSelect}}</div>
+      <select
+        v-model="bindForm.bindMultiSelect"
+        multiple
+        style="width:300px"
+      >
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+
+      <h2>修飾符</h2>
+      <h3>.lazy</h3>
+      <div>默認情况下,v-model 會在每次 input 事件後更新數據,你可以添加 lazy 修飾符來改為在每次 change 事件後更新數據</div>
+      <div>{{bindForm.bindLazy}}</div>
+      <input v-model.lazy="bindForm.bindLazy">
+
+      <h3>.number</h3>
+      <div>如果你想讓用戶輸入自動轉換為數字(若輸入非數字的字元將會失效)</div>
+      <div>{{bindForm.bindNumber}}</div>
+      <input
+        type="number"
+        v-model.number="bindForm.bindNumber"
+      >
+
+      <h3>.trim</h3>
+      <div>如果你想要默認自動去除用戶輸入內容中頭尾空白</div>
+      <div style="margin:10px 0px 10px 0px">
+        <input
+          type="text"
+          v-model.trim="bindForm.bindTrim"
+        >
+      </div>
+      <div>
+        <input
+          type="text"
+          v-model="bindForm.bindNotTrim"
+        >
+      </div>
+
+    </div>
+
   </div>
 
 
